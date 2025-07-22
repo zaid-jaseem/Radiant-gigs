@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration - Radiant Gigs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- HTML -->
+    <div class="register-container">
+        <div class="logo">
+            <i class="fas fa-pencil-alt"></i>
+            <h1>Radiant Gigs</h1>
+            <p>Your Premium Stationery Delivery Service</p>
+        </div>
+        <form id="registerForm" aria-label="User Registration Form">
+            <div class="form-group">
+                <label for="regUsername">Username</label>
+                <input type="text" id="regUsername" required aria-describedby="regUsernameError">
+                <span id="regUsernameError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required aria-describedby="emailError">
+                <span id="emailError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" required aria-describedby="fullNameError">
+                <span id="fullNameError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" pattern="[0-9]{10}" required aria-describedby="phoneError">
+                <span id="phoneError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" required aria-describedby="addressError">
+                <span id="addressError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" required aria-describedby="regPasswordError">
+                <span id="regPasswordError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" required aria-describedby="confirmPasswordError">
+                <span id="confirmPasswordError" class="error"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+    <div id="notification" class="notification"></div>
+
+    <!-- CSS -->
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #6b48ff, #00ddeb);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .btn {
+            padding: 12px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+        .btn-primary {
+            background: #39ff14;
+            color: #1a1a2d;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Register Container */
+        .register-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .logo i {
+            background: #39ff14;
+            color: #1a1a2d;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 10px;
+        }
+        .logo h1 {
+            font-size: 28px;
+            color: #1a1a2d;
+            margin: 10px 0;
+        }
+        .logo p {
+            font-size: 12px;
+            color: #666;
+            margin: 0;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #1a1a2d;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #39ff14;
+            box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
+        }
+        .form-group .error {
+            color: #39ff14;
+            font-size: 12px;
+            display: none;
+        }
+        .register-container p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        .register-container a {
+            color: #00ddeb;
+            text-decoration: none;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            color: #1a1a2d;
+            display: none;
+            z-index: 1000;
+        }
+        .notification.success {
+            background: #00ddeb;
+            box-shadow: 0 0 15px rgba(0, 221, 235, 0.5);
+            animation: slideIn 0.3s ease-in;
+        }
+        .notification.error {
+            background: #39ff14;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+            animation: slideIn 0.3s ease-in;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .register-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            .logo h1 {
+                font-size: 24px;
+            }
+            .logo i {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <!-- JavaScript -->
+    <script>
+        // Data
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+        // Notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            notification.className = `notification ${type}`;
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Save data
+        function saveData() {
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+
+        // Validation
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function validatePhone(phone) {
+            return /^\d{10}$/.test(phone);
+        }
+
+        // Register handler
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('regUsername').value;
+            const email = document.getElementById('email').value;
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (users.find(u => u.username === username)) {
+                showNotification('Username already exists', 'error');
+                return;
+            }
+            if (!validateEmail(email)) {
+                showNotification('Invalid email format', 'error');
+                return;
+            }
+            if (!validatePhone(phone)) {
+                showNotification('Phone must be 10 digits', 'error');
+                return;
+            }
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+
+            users.push({ username, email, fullName, phone, address, password, status: 'active' });
+            saveData();
+            showNotification('Registration successful! Please login.', 'success');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

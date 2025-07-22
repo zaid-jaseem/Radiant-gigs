@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiant Gigs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- HTML -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-pencil-alt"></i>
+            <h1>Radiant Gigs</h1>
+        </div>
+        <nav>
+            <button class="btn btn-primary" onclick="window.location.href='login.html'" aria-label="Login">Login</button>
+            <button class="btn btn-secondary" onclick="window.location.href='signup.html'" aria-label="Sign Up">Sign Up</button>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h2>Welcome to Radiant Gigs</h2>
+            <p>Your one-stop shop for premium stationery products!</p>
+            <button class="btn btn-primary" onclick="window.location.href='dashboard.html'" aria-label="Shop Now">Shop Now</button>
+        </section>
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product-grid" id="featuredProducts"></div>
+        </section>
+    </main>
+    <footer>
+        <p>@ 2025 Mohammed Zaid. All rights reserved.</p>
+    </footer>
+    <div id="notification" class="notification"></div>
+
+    <!-- CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: #1a1a2d;
+            color: #fff;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+        .btn-primary {
+            background: #39ff14;
+            color: #1a1a2d;
+        }
+        .btn-secondary {
+            background: #00ddeb;
+            color: #fff;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        header {
+            background: linear-gradient(135deg, #6b48ff, #00ddeb);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo i {
+            background: #39ff14;
+            color: #1a1a2d;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .logo h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+        header nav {
+            display: flex;
+            gap: 10px;
+        }
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: #2a2a3d;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease-in;
+        }
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .featured-products {
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .featured-products h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .product-card {
+            background: #1a1a2d;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+        .product-card h3 {
+            font-size: 16px;
+            color: #00ddeb;
+            margin-bottom: 8px;
+        }
+        .product-card p {
+            font-size: 12px;
+            color: #e0e0e0;
+            margin-bottom: 8px;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            color: #1a1a2d;
+            display: none;
+            z-index: 1000;
+        }
+        .notification.success {
+            background: #00ddeb;
+            box-shadow: 0 0 15px rgba(0, 221, 235, 0.5);
+            animation: slideIn 0.3s ease-in;
+        }
+        .notification.error {
+            background: #39ff14;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+            animation: slideIn 0.3s ease-in;
+        }
+        footer {
+            background: #1a1a2d;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #2a2a3d;
+        }
+        footer p {
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            header nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h2 {
+                font-size: 28px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 500px) {
+            .hero h2 {
+                font-size: 24px;
+            }
+            .btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
+
+    <!-- JavaScript -->
+    <script>
+        // Data Initialization
+        let products = JSON.parse(localStorage.getItem('products')) || [];
+
+        // Notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            notification.className = `notification ${type}`;
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Load Featured Products
+        function loadFeaturedProducts() {
+            try {
+                const productList = document.getElementById('featuredProducts');
+                if (!Array.isArray(products)) {
+                    console.error('Products is not an array:', products);
+                    productList.innerHTML = '<p>Error: Invalid product data</p>';
+                    return;
+                }
+
+                const featuredProducts = products.filter(p => p.enabled && p.featured);
+                productList.innerHTML = featuredProducts.length ? featuredProducts.map(p => {
+                    try {
+                        return `
+                            <div class="product-card">
+                                <img src="${(p.images && p.images[0]) || 'https://via.placeholder.com/300'}" alt="${p.name || 'Product'}">
+                                <h3>${p.name || 'Unknown'}</h3>
+                                <p>₹${((p.discountedPrice || p.mrpPrice || 0)).toFixed(2)}</p>
+                                <button class="btn btn-primary" onclick="window.location.href='login.html'" aria-label="Shop ${p.name || 'product'}">Shop Now</button>
+                            </div>
+                        `;
+                    } catch (e) {
+                        console.error('Error rendering product:', p, e);
+                        return '';
+                    }
+                }).join('') : '<p>No featured products available</p>';
+            } catch (e) {
+                console.error('Error loading featured products:', e);
+                showNotification('Error loading products', 'error');
+                productList.innerHTML = '<p>Error loading products</p>';
+            }
+        }
+
+        // Initialize
+        loadFeaturedProducts();
+    </script>
+</body>
+</html>
